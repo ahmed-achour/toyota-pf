@@ -1,0 +1,25 @@
+{
+  "name": "toyota-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vergo789/toyota-pf.git"
+  },
+  "author": "rihab-ilef",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vergo789/toyota-pf/issues"
+  },
+  "homepage": "https://github.com/vergo789/toyota-pf#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
