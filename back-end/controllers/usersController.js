@@ -29,4 +29,34 @@ app.post('/', async (req, res) => {
   });
 
 
+  app.post('/login', async (req, res) => {
+    try {
   
+      let data = req.body
+  
+      let user = await User.findOne({ username: data.username })
+  
+      if (user) {
+        let compare = bcrypt.compareSync(data.password, user.password)
+  
+        if (compare) {
+
+          let dataToStoreInToken = {
+            id: user._id
+          }
+  
+          let myToken = jwt.sign(dataToStoreInToken, "SECRET")
+  
+          res.status(200).send({ token: myToken })
+  
+        }
+        else
+          res.status(404).send({ message: "User not found !" })
+      }
+      else
+        res.status(404).send({ message: "User not found !" })
+  
+    } catch (error) {
+      res.status(400).send({ message: "user cannot logged in !", error: error })
+    }
+  })
