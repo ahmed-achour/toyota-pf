@@ -5,7 +5,7 @@ let DATABASE_NAME = "school-management"
 
 mongoose
     .connect(`${DATABASE_URI}/${DATABASE_NAME}`)
-    .then(() => { console.log("Connection to database success ! "); })
-    .catch(() => { console.log("Error Connection to database ! "); })
+    .then(() => { console.log("🟢 Connection to database success ! "); })
+    .catch(() => { console.log("🔴 Error Connection to database ! "); })
 
 module.exports = mongoose
