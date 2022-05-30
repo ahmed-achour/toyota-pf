@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 let DATABASE_URI = "mongodb://localhost:27017"
-let DATABASE_NAME = "school-management"
+let DATABASE_NAME = "TOYOTA-DATABASE"
 
 mongoose
     .connect(`${DATABASE_URI}/${DATABASE_NAME}`)
