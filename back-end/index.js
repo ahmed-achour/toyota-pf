@@ -2,6 +2,7 @@
 const express = require("express");
 
 // import database connection
+const mongoose = require("./config/db")
 
 // import controllers
 
