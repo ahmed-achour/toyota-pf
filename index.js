@@ -1,6 +1,7 @@
 // import libs
 const express = require("express")
 const cors = require("cors")
+
 // import database connection
 const mongoose = require("./config/db")
 
@@ -11,18 +12,16 @@ const stockController = require("./controllers/stockController")
 const clientController = require("./controllers/clientController")
 const carsController = require("./controllers/carsController")
 
-
 // creation d'un objet express .
 const app = express();
 const port = 3000
 
-
 // autorisé les données de type JSON
 app.use(express.json())
+
 // autorisé les données de type files
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(express.urlencoded({extended: true}));
+
 // autorisé l'accee d'un serveur
 app.use(cors())
 
@@ -32,7 +31,6 @@ app.use("/client", clientController);
 app.use("/stock", stockController);
 app.use("/demande", papperController);
 app.use("/cars", carsController);
-
 
 app.get('/', (req,res) =>{
     res.send("hello world")
