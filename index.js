@@ -20,10 +20,19 @@ const port = 3000
 app.use(express.json())
 
 // autorisé les données de type files
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 // autorisé l'accee d'un serveur
 app.use(cors())
+
+
+// access to public files
+app.use(express.static('./assets/images'));
+app.use(express.static('./assets/images/cars'));
+app.use(express.static('./assets/images/client'));
+
 
 // router
 app.use("/users", usersController);
@@ -32,8 +41,5 @@ app.use("/stock", stockController);
 app.use("/demande", papperController);
 app.use("/cars", carsController);
 
-app.get('/', (req,res) =>{
-    res.send("hello world")
-})
 
 app.listen(port, ()=>{ console.log(`🟢 Server started on port ${port}`); })

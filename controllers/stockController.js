@@ -1,8 +1,9 @@
 const express = require("express");
 const Stocks = require("../models/stock")
 const app = express();
-const { isAuthorized, isDircteur } = require("./../middlewares/auth")
-app.post('/', [isAuthorized, isDircteur], async(req, res) =>{
+const { isAuthorized, isDircteur, isMagazinier, isCom, isRespoAPV } = require("./../middlewares/auth")
+
+app.post('/', async(req, res) =>{
     try {
         let data = req.body;
         let stock = new Stocks({
@@ -30,7 +31,7 @@ app.get('/', async(req, res)=> {
 
 });
 
-app.get('/:id', [isAuthorized, isDircteur], async (req, res) => {
+app.get('/:id', async (req, res) => {
     try {
       let stockId = req.params.id
   
@@ -46,7 +47,7 @@ app.get('/:id', [isAuthorized, isDircteur], async (req, res) => {
     }
   })
   
-  app.patch('/:id',[isAuthorized, isDircteur], async (req, res) => {
+  app.patch('/:id', async (req, res) => {
     try {
       let stockId = req.params.id
       let data = req.body
@@ -64,7 +65,7 @@ app.get('/:id', [isAuthorized, isDircteur], async (req, res) => {
   
   })
   
-  app.delete('/:id', [isAuthorized, isDircteur],async (req, res) => {
+  app.delete('/:id',async (req, res) => {
     try {
       let stockId = req.params.id
   

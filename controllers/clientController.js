@@ -81,7 +81,7 @@ app.post('/create_profile/:id' ,[isAuthorized, isDircteur, upload.single('pictur
     }
 });
 
-app.get('/',[isAuthorized, isDircteur], async(req, res)=> {
+app.get('/', async(req, res)=> {
     try {
         let clients = await Clients.find()
         res.status(200).send(clients)

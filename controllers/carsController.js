@@ -3,7 +3,7 @@ const multer = require('multer')
 
 const app = express();
 const path = require('path');
-
+const fs = require("fs");
 const Cars = require("../models/cars")
 const { isAuthorized, isDircteur } = require("./../middlewares/auth")
 
@@ -14,7 +14,7 @@ const storage = multer.diskStorage(
     destination: './assets/images/cars',
 
     filename: function (req, file, cb) {
-      let name = req.body.firstname.replace(' ', '').toLowerCase();
+      let name = req.body.model.replace(' ', '').toLowerCase();
 
       cb(null, name + '-' + Date.now() + path.extname(file.originalname));
     }
@@ -50,10 +50,12 @@ const upload = multer({
   }
 });
 
-app.post('/', [isAuthorized, isDircteur, upload.single('picture'), isDircteur], async(req, res) =>{
+
+app.post('/', [upload.single('photo')], async(req, res) =>{
     try {
         let data = req.body;
         let file = req.file
+        console.log(data)
         let car = new Cars({
             qr_code: data.qr_code,
             model: data.model,
@@ -97,10 +99,16 @@ app.get('/:id', async (req, res) => {
     }
   })
   
-app.patch('/:id', [isAuthorized, isDircteur], async (req, res) => {
+app.patch('/:id', [upload.single('photo')], async (req, res) => {
     try {
       let carId = req.params.id
       let data = req.body
+      if (req.file) {
+        data.photo = req.file.filename;
+        console.log(data.photo)
+        let carPic = await Cars.findOne({ _id: carId });
+        fs.unlinkSync("assets/images/cars/" + carPic.photo);
+      }
       let car = await Cars.findOneAndUpdate({ _id: carId }, data)
   
       if (car)
@@ -114,7 +122,7 @@ app.patch('/:id', [isAuthorized, isDircteur], async (req, res) => {
   
   })
   
-app.delete('/:id',[isAuthorized, isDircteur], async (req, res) => {
+app.delete('/:id', async (req, res) => {
     try {
       let carId = req.params.id
   

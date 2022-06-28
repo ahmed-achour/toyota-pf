@@ -14,7 +14,6 @@ const isAuthorized = (req, res, next) => {
 }
 
 const isDircteur = (req, res, next) => {
-
     try {
         let token = req.get("Authorization")
         let decodedToken = jwt.verify(token, "SECRET")
@@ -30,4 +29,56 @@ const isDircteur = (req, res, next) => {
     }
 }
 
-module.exports = { isAuthorized, isDircteur }
+
+const isMagazinier = (req, res, next) => {
+
+    try {
+        let token = req.get("Authorization")
+        let decodedToken = jwt.verify(token, "SECRET")
+        if (decodedToken.role == "magasinier"){
+            console.log(decodedToken);
+            next()
+        }else {
+            res.status(400).send({ message: "accesss denied", error: "accesss denied" })
+        }
+
+    } catch (error) {
+        res.status(400).send({ message: "Error fetching users !", error: error })
+    }
+}
+
+const isRespoAPV = (req, res, next) => {
+
+    try {
+        let token = req.get("Authorization")
+        let decodedToken = jwt.verify(token, "SECRET")
+        if (decodedToken.role == "responsable APV"){
+            console.log(decodedToken);
+            next()
+        }else {
+            res.status(400).send({ message: "accesss denied", error: "accesss denied" })
+        }
+
+    } catch (error) {
+        res.status(400).send({ message: "Error fetching users !", error: error })
+    }
+}
+
+const isCom = (req, res, next) => {
+
+    try {
+        let token = req.get("Authorization")
+        let decodedToken = jwt.verify(token, "SECRET")
+        if (decodedToken.role == "conseiller commercial"){
+            console.log(decodedToken);
+            next()
+        }else {
+            res.status(400).send({ message: "accesss denied", error: "accesss denied" })
+        }
+
+    } catch (error) {
+        res.status(400).send({ message: "Error fetching users !", error: error })
+    }
+}
+
+module.exports = { isAuthorized, isDircteur, isCom, isRespoAPV, isMagazinier }
